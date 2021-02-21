@@ -11,7 +11,7 @@ def get_image(image_path):
     image = cv2.imread(image_path)
     image  = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
     return image
-def get_colors(image,number_of_colors,show_chart):
+def get_colors(image,number_of_colors):
     modified_image = cv2.resize(image,(600,400),interpolation = cv2.INTER_AREA)
     modified_image = modified_image.reshape(modified_image.shape[0]*modified_image.shape[1],3)
     clf  = KMeans(n_clusters = number_of_colors)
@@ -21,10 +21,6 @@ def get_colors(image,number_of_colors,show_chart):
     ordered_colors = [center_colors[i] for i in counts.keys()]
     hex_colors = [RGB2HEX(ordered_colors[i]) for i in counts.keys()]
     rgb_colors = [ordered_colors[i] for i in counts.keys()]
-    if(show_chart):
-        plt.figure(figsize = (8,6))
-        plt.pie(counts.values(), labels = hex_colors,colors = hex_colors)
-    return rgb_colors
 
 def show_selected_images(images, color, threshold, colors_to_match):
     index = 1
@@ -34,7 +30,7 @@ def show_selected_images(images, color, threshold, colors_to_match):
     return selected
 def match_image_by_color(image, color, threshold = 60, number_of_colors = 10): 
     
-    image_colors = get_colors(image, number_of_colors, False)
+    image_colors = get_colors(image, number_of_colors)
     selected_color = rgb2lab(np.uint8(np.asarray([[color]])))
 
     select_image = False
