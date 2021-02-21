@@ -56,8 +56,9 @@ image = os.listdir(image_directory)
 for file in image:
     if not file.startswith('.'):
         images.append(get_image(os.path.join(image_directory,file)))
+result = 'result'
 for i in COLORS:
-    path = os.path.join(image_directory,i)
+    path = os.path.join(result,i)
     os.mkdir(path)
     selected = show_selected_images(images, COLORS[i], 60, 5)
     for i in range(0,len(image)):
